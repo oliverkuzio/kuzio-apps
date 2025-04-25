@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>Kuzio Apps • Launch an app from the suite</title>
+	<title>Launch an app from the Kuzio Apps suite • Kuzio Apps</title>
 	<meta name="description" content="Launch an app from the Kuzio Apps suite" />
 </svelte:head>
 
