@@ -14,7 +14,6 @@
 </script>
 
 <div class="my-auto flex h-full flex-col items-stretch justify-around">
-	<h1 class="-mt-32 mb-16 text-center text-3xl font-bold">Choose an application:</h1>
 	<nav>
 		<ul class="mt-4 flex flex-col items-center justify-center">
 			{#if items.length > 0}
