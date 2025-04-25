@@ -13,6 +13,11 @@
 	];
 </script>
 
+<svelte:head>
+	<title>Kuzio Apps</title>
+	<meta name="description" content="Launch an app from the Kuzio Apps suite" />
+</svelte:head>
+
 <div class="my-auto flex h-full flex-col items-stretch justify-around">
 	<nav>
 		<ul class="mt-4 flex flex-col items-center justify-center">
