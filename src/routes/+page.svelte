@@ -5,7 +5,7 @@
 		{
 			name: 'Baby Sign',
 			href: 'https://babysign.kuzio.app',
-			color: 'pink-500',
+			color: 'bg-pink-500',
 			image:
 				'https://res.cloudinary.com/spiralyze/image/upload/f_auto,w_auto/BabySignLanguage/DictionaryPages/hello.svg',
 			active: true
@@ -14,13 +14,13 @@
 </script>
 
 <svelte:head>
-	<title>Kuzio Apps - Launch an app from the suite</title>
+	<title>Kuzio Apps • Launch an app from the suite</title>
 	<meta name="description" content="Launch an app from the Kuzio Apps suite" />
 </svelte:head>
 
 <div class="my-auto flex h-full flex-col items-stretch justify-around">
 	<nav>
-		<ul class="mt-4 flex flex-col items-center justify-center">
+		<ul class="flex flex-col items-center justify-center gap-4">
 			{#if items.length > 0}
 				{#each items as item (item.href.replace(/http:\/\/|https:\/\//gi, ''))}
 					<li>

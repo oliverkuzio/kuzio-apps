@@ -17,7 +17,7 @@
 <article class="flex flex-col items-stretch text-center text-white">
 	<a href={active ? href : '#'} class="d-block">
 		<picture
-			class="block aspect-square rounded-full {`bg-${color}`} mb-3 flex w-52 w-52 items-center justify-center p-4"
+			class="block aspect-square rounded-full {color} mb-3 flex w-52 w-52 items-center justify-center p-4"
 		>
 			<img src={image} alt={name} class="w-48 w-48 rounded-full" />
 		</picture>
