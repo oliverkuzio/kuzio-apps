@@ -21,7 +21,7 @@
 		<picture
 			class="block aspect-square rounded-full {color} mb-3 flex h-52 w-52 items-center justify-center p-4"
 		>
-			<img src={image} alt={name} class="h-48 w-auto rounded-full" />
+			<img src={image} alt={name} class="h-auto w-48 rounded-full" />
 		</picture>
 		<h2 class="text-lg font-semibold">
 			{#if icon}
