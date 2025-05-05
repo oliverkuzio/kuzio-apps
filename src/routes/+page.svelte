@@ -9,6 +9,13 @@
 			image:
 				'https://res.cloudinary.com/spiralyze/image/upload/f_auto,w_auto/BabySignLanguage/DictionaryPages/hello.svg',
 			active: true
+		},
+		{
+			name: 'Travel Log',
+			href: 'https://travel.kuzio.app',
+			color: 'bg-teal-600',
+			image: 'https://cdn-icons-png.flaticon.com/512/201/201623.png',
+			active: true
 		}
 	];
 </script>
