@@ -8,21 +8,25 @@
 		color: string;
 		/** Image URL of the webapp */
 		image: string;
+		/** Icon */
+		icon: boolean;
 		/** Active state of the webapp */
 		active: boolean;
 	}
-	let { name, href, color, image, active }: Props = $props();
+	let { name, href, color, image, icon, active }: Props = $props();
 </script>
 
 <article class="flex flex-col items-stretch text-center text-white">
 	<a href={active ? href : '#'} class="d-block">
 		<picture
-			class="block aspect-square rounded-full {color} mb-3 flex w-52 w-52 items-center justify-center p-4"
+			class="block aspect-square rounded-full {color} mb-3 flex h-52 w-52 items-center justify-center p-4"
 		>
-			<img src={image} alt={name} class="w-48 w-48 rounded-full" />
+			<img src={image} alt={name} class="h-48 w-48 rounded-full" />
 		</picture>
 		<h2 class="text-lg font-semibold">
-			<img src={`${href}/favicon.png`} alt={`${name} icon`} class="inline-block w-5 w-5" />
+			{#if icon}
+				<img src={`${href}/favicon.png`} alt={`${name} icon`} class="inline-block h-5 w-5" />
+			{/if}
 			{name}
 		</h2>
 	</a>
