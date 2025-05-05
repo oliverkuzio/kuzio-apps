@@ -27,7 +27,7 @@
 
 <div class="my-auto flex h-full flex-col items-stretch justify-around">
 	<nav>
-		<ul class="flex flex-col items-center justify-center gap-4">
+		<ul class="flex flex-row flex-wrap items-center justify-center gap-4">
 			{#if items.length > 0}
 				{#each items as item (item.href.replace(/http:\/\/|https:\/\//gi, ''))}
 					<li>
