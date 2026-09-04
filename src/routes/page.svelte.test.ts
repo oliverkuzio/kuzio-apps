@@ -1,11 +1,11 @@
-import { describe, test, expect } from 'vitest';
-import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/svelte';
-import Page from './+page.svelte';
+import { render, screen } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import Page from './+page.svelte'
+import '@testing-library/jest-dom/vitest'
 
 describe('/+page.svelte', () => {
-	test('should render h1', () => {
-		render(Page);
-		expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-	});
-});
+  it('should render h1', () => {
+    render(Page)
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+  })
+})

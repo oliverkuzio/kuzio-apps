@@ -36,3 +36,23 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Database & auth
+
+Data lives in a Cloudflare D1 database (binding `DB`), with schema and queries managed by
+[Drizzle](https://orm.drizzle.team) under [`src/lib/db`](src/lib/db). User accounts are handled by
+[Better Auth](https://www.better-auth.com) (email/password), with its core tables and a
+project-specific `sites` entity (mirroring the `ItemType` shape from the homepage) both defined in
+[`src/lib/db/schema.ts`](src/lib/db/schema.ts). File uploads go to an R2 bucket (binding `BUCKET`).
+
+- `pnpm db:generate` — generate a SQL migration from schema changes
+- `pnpm db:migrate` — apply migrations to the local D1 replica (used by `pnpm dev`/`pnpm preview`)
+- `pnpm db:migrate:remote` — apply migrations to the production D1 database
+- `pnpm db:studio` — browse the database with Drizzle Studio
+
+## Linting
+
+Formatting and linting are both handled by [`@antfu/eslint-config`](https://github.com/antfu/eslint-config)
+(no Prettier). `pnpm lint` checks the project and `pnpm lint:fix` applies fixes; the same check
+also runs in CI via [`.github/workflows/lint.yml`](.github/workflows/lint.yml). A Husky
+`pre-commit` hook runs `lint-staged`, which lints staged files before each commit.

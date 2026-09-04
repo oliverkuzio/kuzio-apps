@@ -1,36 +1,25 @@
-import prettier from 'eslint-config-prettier';
-import js from '@eslint/js';
-import { includeIgnoreFile } from '@eslint/compat';
-import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
-import { fileURLToPath } from 'node:url';
-import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
+import antfu from '@antfu/eslint-config'
 
-const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
-
-export default ts.config(
-	includeIgnoreFile(gitignorePath),
-	js.configs.recommended,
-	...ts.configs.recommended,
-	...svelte.configs.recommended,
-	prettier,
-	...svelte.configs.prettier,
-	{
-		languageOptions: {
-			globals: { ...globals.browser, ...globals.node }
-		},
-		rules: { 'no-undef': 'off' }
-	},
-	{
-		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
-		languageOptions: {
-			parserOptions: {
-				projectService: true,
-				extraFileExtensions: ['.svelte'],
-				parser: ts.parser,
-				svelteConfig
-			}
-		}
-	}
-);
+export default antfu(
+  {
+    svelte: true,
+    typescript: true,
+    ignores: ['drizzle/**'],
+  },
+  {
+    files: ['**/*.svelte'],
+    rules: {
+      // `export let data` is the standard SvelteKit page-props pattern, not a mutable export bug.
+      'import/no-mutable-exports': 'off',
+      // Requires SvelteKit's typed-routing `resolve()` helper, which this app doesn't use.
+      'svelte/no-navigation-without-resolve': 'off',
+    },
+  },
+  {
+    files: ['pnpm-workspace.yaml'],
+    rules: {
+      // Enforces supply-chain policy settings unrelated to this repo's config; not a formatting concern.
+      'pnpm/yaml-enforce-settings': 'off',
+    },
+  },
+)
