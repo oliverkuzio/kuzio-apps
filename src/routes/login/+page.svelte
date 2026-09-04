@@ -1,9 +1,8 @@
 <script lang='ts'>
   import { goto } from '$app/navigation'
+  import { page } from '$app/state'
   import { authClient } from '$lib/auth-client'
 
-  let mode: 'sign-in' | 'sign-up' = $state('sign-in')
-  let name = $state('')
   let email = $state('')
   let password = $state('')
   let error = $state('')
@@ -12,17 +11,15 @@
     event.preventDefault()
     error = ''
 
-    const { error: authError }
-      = mode === 'sign-in'
-        ? await authClient.signIn.email({ email, password })
-        : await authClient.signUp.email({ name, email, password })
+    const { error: authError } = await authClient.signIn.email({ email, password })
 
     if (authError) {
       error = authError.message ?? 'Something went wrong'
       return
     }
 
-    await goto('/', { invalidateAll: true })
+    const redirectTo = page.url.searchParams.get('redirectTo') ?? '/'
+    await goto(redirectTo, { invalidateAll: true })
   }
 </script>
 
@@ -31,29 +28,9 @@
 </svelte:head>
 
 <div class='mx-auto flex w-full max-w-sm flex-col gap-4 p-8'>
-  <div class='flex justify-center gap-4 text-sm'>
-    <button
-      class:underline={mode === 'sign-in'}
-      onclick={() => (mode = 'sign-in')}
-      type='button'>Sign in</button
-    >
-    <button
-      class:underline={mode === 'sign-up'}
-      onclick={() => (mode = 'sign-up')}
-      type='button'>Sign up</button
-    >
-  </div>
+  <h1 class='text-center text-xl font-semibold'>Sign in</h1>
 
   <form class='flex flex-col gap-3' onsubmit={submit}>
-    {#if mode === 'sign-up'}
-      <input
-        class='rounded border p-2'
-        type='text'
-        placeholder='Name'
-        bind:value={name}
-        required
-      />
-    {/if}
     <input
       class='rounded border p-2'
       type='email'
@@ -72,8 +49,6 @@
     {#if error}
       <p class='text-sm text-red-600'>{error}</p>
     {/if}
-    <button class='rounded bg-gray-900 p-2 text-white' type='submit'>
-      {mode === 'sign-in' ? 'Sign in' : 'Sign up'}
-    </button>
+    <button class='rounded bg-gray-900 p-2 text-white' type='submit'>Sign in</button>
   </form>
 </div>

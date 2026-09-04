@@ -1,34 +1,8 @@
 <script lang='ts'>
+  import type { PageProps } from './$types'
   import AppLink from '$lib/components/AppLink.svelte'
 
-  type ItemType = {
-    name: string
-    href: string
-    color: string
-    image: string
-    icon: boolean
-    active: boolean
-  }
-
-  const items: ItemType[] = [
-    {
-      name: 'Baby Sign',
-      href: 'https://babysign.kuzio.app',
-      color: 'bg-pink-500',
-      image:
-        'https://res.cloudinary.com/spiralyze/image/upload/f_auto,w_auto/BabySignLanguage/DictionaryPages/hello.svg',
-      icon: true,
-      active: true,
-    },
-    {
-      name: 'Travel Log',
-      href: 'https://travel.kuzio.app',
-      color: 'bg-teal-600',
-      image: 'https://cdn-icons-png.flaticon.com/512/201/201623.png',
-      icon: false,
-      active: true,
-    },
-  ]
+  const { data }: PageProps = $props()
 </script>
 
 <svelte:head>
@@ -39,20 +13,25 @@
 <div class='my-auto flex h-full flex-col items-stretch justify-around'>
   <nav>
     <ul class='flex flex-row flex-wrap items-center justify-center gap-4'>
-      {#if items.length > 0}
-        {#each items as item (item.href.replace(/http:\/\/|https:\/\//gi, ''))}
-          <li>
-            <AppLink
-              name={item.name}
-              href={item.href}
-              color={item.color}
-              image={item.image}
-              icon={item.icon}
-              active={item.active}
-            />
-          </li>
-        {/each}
-      {/if}
+      {#each data.sites as site (site.id)}
+        <li>
+          <AppLink
+            name={site.name}
+            href={site.href}
+            color={site.color}
+            image={site.image}
+            icon={site.icon}
+            active={site.active}
+          />
+        </li>
+      {/each}
     </ul>
   </nav>
+
+  {#if data.user}
+    <div class='flex justify-center gap-4 pb-4 text-sm'>
+      <a href='/sites/new' class='rounded bg-gray-900 px-4 py-2 text-white'>+ Add site</a>
+      <a href='/sites' class='self-center underline'>Manage sites</a>
+    </div>
+  {/if}
 </div>

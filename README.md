@@ -45,6 +45,13 @@ Data lives in a Cloudflare D1 database (binding `DB`), with schema and queries m
 project-specific `sites` entity (mirroring the `ItemType` shape from the homepage) both defined in
 [`src/lib/db/schema.ts`](src/lib/db/schema.ts). File uploads go to an R2 bucket (binding `BUCKET`).
 
+This app only ever has one admin account: sign-up is rejected for any email other than the one set
+in the `ADMIN_EMAIL` env var (a database hook in [`src/lib/db/auth.ts`](src/lib/db/auth.ts)
+enforces this, so it holds for any sign-up method, not just email/password). Set it locally in
+`.dev.vars` and in production with `wrangler secret put ADMIN_EMAIL`. Any signed-in user can manage
+every site under `/sites` — there's no per-user ownership, since only the one admin is expected to
+ever sign in.
+
 - `pnpm db:generate` — generate a SQL migration from schema changes
 - `pnpm db:migrate` — apply migrations to the local D1 replica (used by `pnpm dev`/`pnpm preview`)
 - `pnpm db:migrate:remote` — apply migrations to the production D1 database

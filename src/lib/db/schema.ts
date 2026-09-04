@@ -3,7 +3,9 @@ import { user } from './auth-schema'
 
 export * from './auth-schema'
 
-// Mirrors the ItemType shape from src/routes/+page.svelte, persisted per-user.
+// Mirrors the ItemType shape from src/routes/+page.svelte and is public on the homepage
+// regardless of who created it — there's only ever one admin account, so `userId` just
+// records who created the row rather than scoping visibility or edit access.
 export const sites = sqliteTable('sites', {
   id: text('id')
     .primaryKey()

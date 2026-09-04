@@ -1,3 +1,4 @@
+import type { Db } from '$lib/db'
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 import type { Session, User } from 'better-auth'
@@ -7,10 +8,13 @@ declare global {
   // so they're added to the generated Env type here instead.
   interface Env {
     BETTER_AUTH_SECRET: string
+    // The only email allowed to create an account — see src/lib/db/auth.ts.
+    ADMIN_EMAIL: string
   }
 
   namespace App {
     interface Locals {
+      db: Db
       user: User | null
       session: Session | null
     }

@@ -2,6 +2,10 @@
 # Copy to `.dev.vars` (untracked) and fill in real values.
 # For production, set these with `wrangler secret put <NAME>` instead of committing them.
 
+# The only email allowed to sign up — see src/lib/db/auth.ts. This app only ever
+# has one admin account; sign-up for any other address is rejected.
+ADMIN_EMAIL=
+
 # Random string used to sign session tokens/cookies, e.g. `openssl rand -base64 32`.
 BETTER_AUTH_SECRET=
 
