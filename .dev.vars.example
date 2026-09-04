@@ -3,7 +3,7 @@
 # For production, set these with `wrangler secret put <NAME>` instead of committing them.
 
 # Random string used to sign session tokens/cookies, e.g. `openssl rand -base64 32`.
-BETTER_AUTH_SECRET=u0n6flgHplXTIcJaxJQh3i9KfZEk8dLq
+BETTER_AUTH_SECRET=
 
 # Overrides the production BETTER_AUTH_URL set in wrangler.jsonc's `vars`.
 BETTER_AUTH_URL=http://localhost:5173
