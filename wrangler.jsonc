@@ -55,7 +55,7 @@
     // Not secret — Better Auth's own recommended way to pin its base origin
     // instead of trusting request headers. Overridden to localhost for
     // local dev via `.dev.vars` (which takes precedence over this).
-    "BETTER_AUTH_URL": "https://babysign.kuzio.app"
+    "BETTER_AUTH_URL": "https://kuzio.app"
   }
 
   /**
