@@ -10,7 +10,7 @@
 
 <Page>
   <Header user={data.user} />
-  <main class='relative flex grow flex-col items-stretch'>
+  <main class='relative flex items-stretch grow flex-col'>
     {@render children?.()}
   </main>
   <Footer />

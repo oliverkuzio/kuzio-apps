@@ -1,0 +1,1 @@
+ALTER TABLE `sites` ADD `border_color` text DEFAULT 'border-transparent' NOT NULL;

@@ -2,6 +2,7 @@ import type { Actions, PageServerLoad } from './$types'
 import { sites } from '$lib/db'
 import { requireUser } from '$lib/server/require-user'
 import { parseSiteForm } from '$lib/server/site-form'
+import { deleteSiteImage, storeSiteImage } from '$lib/server/site-image'
 import { error, fail, redirect } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 
@@ -19,16 +20,21 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 }
 
 export const actions: Actions = {
-  update: async ({ request, params, locals, url }) => {
+  update: async ({ request, params, locals, url, platform }) => {
     requireUser(locals.user, url.pathname)
-    const values = await parseSiteForm(request)
-    if ('error' in values) {
-      return fail(400, { error: values.error })
+    const parsed = await parseSiteForm(request)
+    if ('error' in parsed) {
+      return fail(400, { error: parsed.error })
+    }
+
+    const image = await storeSiteImage(platform!.env.BUCKET, parsed.image, parsed.currentImage)
+    if (typeof image !== 'string') {
+      return fail(400, { error: image.error })
     }
 
     const [updated] = await locals.db
       .update(sites)
-      .set({ ...values, updatedAt: new Date() })
+      .set({ ...parsed.values, image, updatedAt: new Date() })
       .where(eq(sites.id, params.id))
       .returning()
 
@@ -38,7 +44,7 @@ export const actions: Actions = {
 
     throw redirect(303, '/sites')
   },
-  delete: async ({ params, locals, url }) => {
+  delete: async ({ params, locals, url, platform }) => {
     requireUser(locals.user, url.pathname)
     const [deleted] = await locals.db.delete(sites).where(eq(sites.id, params.id)).returning()
 
@@ -46,6 +52,7 @@ export const actions: Actions = {
       return fail(404, { error: 'Site not found.' })
     }
 
+    await deleteSiteImage(platform!.env.BUCKET, deleted.image)
     throw redirect(303, '/sites')
   },
 }

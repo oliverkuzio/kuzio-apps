@@ -1,5 +1,13 @@
 minimumReleaseAgeExcludePrune: true
+
 trustPolicy: no-downgrade
+# Known false positives: pnpm flags these for missing provenance attestation
+# vs. an earlier published version, not an actual compromise.
+# https://github.com/unjs/c12/issues/287
+trustPolicyExclude:
+  - chokidar@4.0.3
+  - undici@5.29.0
+
 shellEmulator: true
 
 allowBuilds:

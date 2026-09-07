@@ -21,7 +21,7 @@
       event.preventDefault()
   }}
 >
-  <button type='submit' class='text-sm text-red-600 underline'>Delete site</button>
+  <button type='submit' class='link link-error text-sm'>Delete site</button>
 </form>
 
-<a href='/sites' class='text-sm underline'>‹ Back to your sites</a>
+<a href='/sites' class='link text-sm'>‹ Back to your sites</a>

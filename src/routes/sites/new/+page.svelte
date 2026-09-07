@@ -12,4 +12,4 @@
 <h1 class='text-xl font-semibold'>Add site</h1>
 <SiteForm submitLabel='Add site' error={form?.error} />
 
-<a href='/sites' class='text-sm underline'>‹ Back to your sites</a>
+<a href='/sites' class='link text-sm'>‹ Back to your sites</a>

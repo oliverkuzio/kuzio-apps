@@ -16,6 +16,8 @@ export const sites = sqliteTable('sites', {
   name: text('name').notNull(),
   href: text('href').notNull(),
   color: text('color').notNull(),
+  // Falls back to an invisible border for sites created before this field existed.
+  borderColor: text('border_color').notNull().default('border-transparent'),
   image: text('image').notNull(),
   icon: integer('icon', { mode: 'boolean' }).notNull().default(false),
   active: integer('active', { mode: 'boolean' }).notNull().default(true),

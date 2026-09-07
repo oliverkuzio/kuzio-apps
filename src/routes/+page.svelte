@@ -10,15 +10,16 @@
   <meta name='description' content='Launch an app from the Kuzio Apps suite' />
 </svelte:head>
 
-<div class='my-auto flex h-full flex-col items-stretch justify-around'>
+<div class='my-auto flex h-full gap-8 flex-col items-stretch justify-around'>
   <nav>
-    <ul class='flex flex-row flex-wrap items-center justify-center gap-4'>
+    <ul class='flex flex-row flex-wrap items-center justify-center gap-8'>
       {#each data.sites as site (site.id)}
         <li>
           <AppLink
             name={site.name}
             href={site.href}
             color={site.color}
+            borderColor={site.borderColor}
             image={site.image}
             icon={site.icon}
             active={site.active}
@@ -29,9 +30,9 @@
   </nav>
 
   {#if data.user}
-    <div class='flex justify-center gap-4 pb-4 text-sm'>
-      <a href='/sites/new' class='rounded bg-gray-900 px-4 py-2 text-white'>+ Add site</a>
-      <a href='/sites' class='self-center underline'>Manage sites</a>
+    <div class='flex items-center justify-center gap-4 pb-4'>
+      <a href='/sites/new' class='btn btn-secondary'>+ Add site</a>
+      <a href='/sites' class='btn btn-neutral'>Manage sites</a>
     </div>
   {/if}
 </div>

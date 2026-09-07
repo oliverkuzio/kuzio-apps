@@ -23,17 +23,14 @@
   <title>Sign in • Kuzio Apps</title>
 </svelte:head>
 
-<div class='mx-auto flex w-full max-w-sm flex-col gap-4 p-8'>
-  <h1 class='text-center text-xl font-semibold'>Sign in</h1>
+<div class='m-auto flex w-full max-w-sm flex-col gap-4 p-8'>
+  <h1 class='text-center text-xl font-semibold'>Sign in with GitHub</h1>
 
   {#if error}
-    <p class='text-center text-sm text-red-600'>{error}</p>
+    <div role='alert' class='alert alert-error text-sm'>{error}</div>
   {/if}
 
-  <button
-    onclick={signInWithGithub}
-    class='flex items-center justify-center gap-2 rounded bg-gray-900 p-2 text-white'
-  >
+  <button onclick={signInWithGithub} class='btn btn-secondary gap-2'>
     <svg width='18' height='18' viewBox='0 0 16 16' fill='currentColor' aria-hidden='true'>
       <path
         d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
@@ -46,6 +43,6 @@
           0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z'
       />
     </svg>
-    Sign in with GitHub
+    Sign in
   </button>
 </div>

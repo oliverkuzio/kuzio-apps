@@ -2,7 +2,7 @@ export interface SiteFormValues {
   name: string
   href: string
   color: string
-  image: string
+  borderColor: string
   icon: boolean
   active: boolean
 }
@@ -11,16 +11,26 @@ export interface SiteFormError {
   error: string
 }
 
+export interface ParsedSiteForm {
+  values: SiteFormValues
+  /** The uploaded image file, if one was chosen — see `storeSiteImage`. */
+  image: File
+  /** Existing image path carried in a hidden field, so edits can keep it unchanged. */
+  currentImage?: string
+}
+
 function isValidUrl(value: string) {
   return URL.canParse(value)
 }
 
-export async function parseSiteForm(request: Request): Promise<SiteFormValues | SiteFormError> {
+export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | SiteFormError> {
   const data = await request.formData()
   const name = data.get('name')
   const href = data.get('href')
   const color = data.get('color')
+  const borderColor = data.get('borderColor')
   const image = data.get('image')
+  const currentImage = data.get('currentImage')
 
   if (typeof name !== 'string' || !name.trim()) {
     return { error: 'Name is required.' }
@@ -31,16 +41,23 @@ export async function parseSiteForm(request: Request): Promise<SiteFormValues | 
   if (typeof color !== 'string' || !color.trim()) {
     return { error: 'Color is required.' }
   }
-  if (typeof image !== 'string' || !isValidUrl(image)) {
-    return { error: 'A valid image URL is required.' }
+  if (typeof borderColor !== 'string' || !borderColor.trim()) {
+    return { error: 'Border color is required.' }
+  }
+  if (!(image instanceof File)) {
+    return { error: 'An image file is required.' }
   }
 
   return {
-    name: name.trim(),
-    href,
-    color: color.trim(),
+    values: {
+      name: name.trim(),
+      href,
+      color: color.trim(),
+      borderColor: borderColor.trim(),
+      icon: data.get('icon') === 'on',
+      active: data.get('active') === 'on',
+    },
     image,
-    icon: data.get('icon') === 'on',
-    active: data.get('active') === 'on',
+    currentImage: typeof currentImage === 'string' && currentImage ? currentImage : undefined,
   }
 }

@@ -12,9 +12,9 @@
 </script>
 
 <header
-  class='sticky top-0 right-0 left-0 z-50 flex flex-row items-center justify-between bg-gray-900 p-4 text-white'
+  class='sticky top-0 right-0 left-0 z-50 flex flex-row items-center justify-between bg-base-300 text-base-content p-4'
 >
-  <a href='/' class='text-decoration-none inline-flex items-center'>
+  <a href='/' class='text-decoration-none inline-flex items-center{!user ? ' mx-auto' : ''}'>
     <svg
       fill='oklch(0.656 0.241 354.308)'
       width='32'
@@ -27,12 +27,10 @@
     >
     <span class='m-0 pl-2'>Kuzio Apps</span>
   </a>
-  <div class='text-sm'>
-    {#if user}
-      <span class='pr-3 text-gray-300'>{user.email}</span>
-      <button onclick={signOut} class='cursor-pointer underline'>Sign out</button>
-    {:else}
-      <a href='/login' class='underline'>Sign in</a>
-    {/if}
-  </div>
+  {#if user}
+    <div class='flex items-center gap-3 text-sm'>
+      <span class='text-gray-300'>{user.email}</span>
+      <button onclick={signOut} class='btn btn-sm btn-ghost'>Sign out</button>
+    </div>
+  {/if}
 </header>
