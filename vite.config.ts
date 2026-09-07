@@ -1,10 +1,18 @@
+import { sentrySvelteKit } from '@sentry/sveltekit'
 import { sveltekit } from '@sveltejs/kit/vite'
 import tailwindcss from '@tailwindcss/vite'
 import { svelteTesting } from '@testing-library/svelte/vite'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  plugins: [tailwindcss(), sveltekit()],
+  plugins: [
+    // No source map upload — kept out of scope for now (would need a Sentry auth
+    // token/org/project and approving @sentry/cli's install script). Must come
+    // before sveltekit().
+    sentrySvelteKit({ autoUploadSourceMaps: false }),
+    tailwindcss(),
+    sveltekit(),
+  ],
   test: {
     projects: [
       {

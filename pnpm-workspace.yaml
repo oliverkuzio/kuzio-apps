@@ -4,13 +4,18 @@ trustPolicy: no-downgrade
 # Known false positives: pnpm flags these for missing provenance attestation
 # vs. an earlier published version, not an actual compromise.
 # https://github.com/unjs/c12/issues/287
+# https://github.com/pnpm/pnpm/issues/10202
 trustPolicyExclude:
   - chokidar@4.0.3
   - undici@5.29.0
+  - semver@6.3.1
 
 shellEmulator: true
 
 allowBuilds:
+  # Only downloads the sentry-cli binary, needed for source map uploads — not used
+  # (see vite.config.ts: autoUploadSourceMaps is off).
+  '@sentry/cli': false
   esbuild: true
   sharp: true
   workerd: true

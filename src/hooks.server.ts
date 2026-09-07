@@ -1,10 +1,13 @@
 import type { Handle } from '@sveltejs/kit'
 import { building } from '$app/environment'
+import { PUBLIC_SENTRY_DSN } from '$env/static/public'
 import { createDb } from '$lib/db'
 import { createAuth } from '$lib/db/auth'
+import * as Sentry from '@sentry/sveltekit'
+import { sequence } from '@sveltejs/kit/hooks'
 import { svelteKitHandler } from 'better-auth/svelte-kit'
 
-export const handle: Handle = async ({ event, resolve }) => {
+const authHandle: Handle = async ({ event, resolve }) => {
   const db = createDb(event.platform!.env.DB)
   const auth = createAuth(
     db,
@@ -24,3 +27,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   return svelteKitHandler({ event, resolve, auth, building })
 }
+
+export const handle = sequence(
+  Sentry.initCloudflareSentryHandle({ dsn: PUBLIC_SENTRY_DSN, tracesSampleRate: 1.0 }),
+  Sentry.sentryHandle(),
+  authHandle,
+)
+
+export const handleError = Sentry.handleErrorWithSentry()
