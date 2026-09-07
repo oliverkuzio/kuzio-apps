@@ -10,6 +10,9 @@ declare global {
     BETTER_AUTH_SECRET: string
     // The only email allowed to create an account — see src/lib/db/auth.ts.
     ADMIN_EMAIL: string
+    // GitHub OAuth App credentials: https://github.com/settings/developers
+    GITHUB_CLIENT_ID: string
+    GITHUB_CLIENT_SECRET: string
   }
 
   namespace App {

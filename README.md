@@ -41,16 +41,23 @@ You can preview the production build with `npm run preview`.
 
 Data lives in a Cloudflare D1 database (binding `DB`), with schema and queries managed by
 [Drizzle](https://orm.drizzle.team) under [`src/lib/db`](src/lib/db). User accounts are handled by
-[Better Auth](https://www.better-auth.com) (email/password), with its core tables and a
+[Better Auth](https://www.better-auth.com) via GitHub OAuth, with its core tables and a
 project-specific `sites` entity (mirroring the `ItemType` shape from the homepage) both defined in
 [`src/lib/db/schema.ts`](src/lib/db/schema.ts). File uploads go to an R2 bucket (binding `BUCKET`).
 
-This app only ever has one admin account: sign-up is rejected for any email other than the one set
-in the `ADMIN_EMAIL` env var (a database hook in [`src/lib/db/auth.ts`](src/lib/db/auth.ts)
-enforces this, so it holds for any sign-up method, not just email/password). Set it locally in
-`.dev.vars` and in production with `wrangler secret put ADMIN_EMAIL`. Any signed-in user can manage
-every site under `/sites` — there's no per-user ownership, since only the one admin is expected to
-ever sign in.
+This app only ever has one admin account: signing in is rejected for any GitHub account whose email
+isn't the one set in the `ADMIN_EMAIL` env var. That's enforced by a `validateUserInfo` hook in
+[`src/lib/db/auth.ts`](src/lib/db/auth.ts), which Better Auth calls on every account creation,
+account link, and OAuth sign-in — so it holds even if a future auth method is added, and re-checks
+on every login rather than just once at sign-up. Any signed-in user can manage every site under
+`/sites` — there's no per-user ownership, since only the one admin is expected to ever sign in.
+
+Set `ADMIN_EMAIL` and a GitHub OAuth App's `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` locally in
+`.dev.vars` (see [`.dev.vars.example`](.dev.vars.example)) and in production with
+`wrangler secret put <NAME>`. Create the OAuth App at
+[github.com/settings/developers](https://github.com/settings/developers) with its callback URL set
+to `<origin>/api/auth/callback/github`. Signing in with that GitHub account is all that's needed —
+there's no separate sign-up step.
 
 - `pnpm db:generate` — generate a SQL migration from schema changes
 - `pnpm db:migrate` — apply migrations to the local D1 replica (used by `pnpm dev`/`pnpm preview`)

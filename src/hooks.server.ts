@@ -6,7 +6,16 @@ import { svelteKitHandler } from 'better-auth/svelte-kit'
 
 export const handle: Handle = async ({ event, resolve }) => {
   const db = createDb(event.platform!.env.DB)
-  const auth = createAuth(db, event.platform!.env.BETTER_AUTH_SECRET, event.platform!.env.ADMIN_EMAIL)
+  const auth = createAuth(
+    db,
+    event.platform!.env.BETTER_AUTH_SECRET,
+    event.platform!.env.BETTER_AUTH_URL,
+    event.platform!.env.ADMIN_EMAIL,
+    {
+      clientId: event.platform!.env.GITHUB_CLIENT_ID,
+      clientSecret: event.platform!.env.GITHUB_CLIENT_SECRET,
+    },
+  )
 
   const session = await auth.api.getSession({ headers: event.request.headers })
   event.locals.db = db
