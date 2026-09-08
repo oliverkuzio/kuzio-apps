@@ -1,41 +1,51 @@
-# sv
+# kuzio-apps
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+A [SvelteKit](https://svelte.dev/docs/kit) app deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/)
+via [`@sveltejs/adapter-cloudflare`](https://svelte.dev/docs/kit/adapter-cloudflare), styled with
+[Tailwind CSS](https://tailwindcss.com) and [daisyUI](https://daisyui.com) components.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies with `pnpm install`, then start a development server:
 
 ```bash
-npm run dev
+pnpm dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev -- --open
 ```
 
 ## Building
 
-To create a production version of your app:
+To create a production version of the app:
 
 ```bash
-npm run build
+pnpm build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build (via `wrangler dev`) with `pnpm preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+To deploy to Cloudflare Workers:
+
+```bash
+pnpm deploy
+```
+
+## Cloudflare integrations
+
+This app runs entirely on Cloudflare Workers, configured in [`wrangler.jsonc`](wrangler.jsonc):
+
+- **D1** — the app's SQL database (binding `DB`), see [Database & auth](#database--auth) below.
+- **R2** — object storage for uploaded site images (binding `BUCKET`), used by
+  [`src/lib/server/site-image.ts`](src/lib/server/site-image.ts) and served back out via
+  [`src/routes/uploads/[...key]`](src/routes/uploads/%5B...key%5D/+server.ts).
+- **Workers Assets** — static asset serving (binding `ASSETS`).
+- **nodejs_compat** — enabled since Better Auth pulls in Node built-ins (`node:crypto`, `node:fs`,
+  `node:path`, `node:os`) that Workers doesn't provide otherwise.
+- **Observability** — enabled for request/error logging in the Cloudflare dashboard.
+
+Run `pnpm cf-typegen` after changing bindings in `wrangler.jsonc` to regenerate
+`src/worker-configuration.d.ts`.
 
 ## Database & auth
 
@@ -64,9 +74,25 @@ there's no separate sign-up step.
 - `pnpm db:migrate:remote` — apply migrations to the production D1 database
 - `pnpm db:studio` — browse the database with Drizzle Studio
 
+## Error monitoring
+
+Errors and performance traces are reported to [Sentry](https://sentry.io) via
+[`@sentry/sveltekit`](https://docs.sentry.io/platforms/javascript/guides/sveltekit/), wired up in
+[`src/hooks.server.ts`](src/hooks.server.ts) and [`src/hooks.client.ts`](src/hooks.client.ts).
+
+The DSN is needed at module-evaluation time (before `platform.env` is available), so it's read as a
+build-time `PUBLIC_SENTRY_DSN` env var rather than a Cloudflare binding — set it in `.env` locally
+(see [`.env.example`](.env.example)) and wherever `pnpm build`/`pnpm deploy` runs (CI or your
+machine). A DSN isn't a secret, so it's safe to commit to build logs/config.
+
 ## Linting
 
 Formatting and linting are both handled by [`@antfu/eslint-config`](https://github.com/antfu/eslint-config)
 (no Prettier). `pnpm lint` checks the project and `pnpm lint:fix` applies fixes; the same check
 also runs in CI via [`.github/workflows/lint.yml`](.github/workflows/lint.yml). A Husky
 `pre-commit` hook runs `lint-staged`, which lints staged files before each commit.
+
+## Testing
+
+Unit tests run with [Vitest](https://vitest.dev) (`pnpm test:unit`) and end-to-end tests with
+[Playwright](https://playwright.dev) (`pnpm test:e2e`); `pnpm test` runs both.

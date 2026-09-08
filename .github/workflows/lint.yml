@@ -2,7 +2,7 @@ name: Lint
 
 on:
   push:
-    branches: [main, production]
+    branches: [development, production]
   pull_request:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
 
       - name: Install dependencies
@@ -28,4 +28,8 @@ jobs:
         run: pnpm run lint
 
       - name: Check types
+        # PUBLIC_SENTRY_DSN isn't a secret (see .env.example) but $env/static/public still needs
+        # it defined at sync/check time, or svelte-check errors that the module has no such export.
         run: pnpm run check
+        env:
+          PUBLIC_SENTRY_DSN: https://placeholder@localhost/0

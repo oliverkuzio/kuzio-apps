@@ -7,6 +7,9 @@
   "name": "kuzio-apps",
   "main": ".svelte-kit/cloudflare/_worker.js",
   "compatibility_date": "2025-04-24",
+  // better-auth pulls in Node built-ins (node:crypto, node:fs, node:path, node:os)
+  // that Workers doesn't provide unless this is enabled.
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "binding": "ASSETS",
     "directory": ".svelte-kit/cloudflare"
