@@ -1,9 +1,15 @@
 {
   "name": "kuzio-apps",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@11.2.2",
+  "keywords": [
+    "svelte"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
