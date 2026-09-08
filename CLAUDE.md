@@ -13,21 +13,21 @@ the lockfile and can desync it. Use `pnpm <script>` for everything in `package.j
 ## Common commands
 
 ```bash
-pnpm dev              # start dev server (vite dev)
-pnpm build            # production build
+pnpm dev               # start dev server (vite dev)
+pnpm build             # production build
 pnpm preview           # build + wrangler dev, closest thing to prod locally
 pnpm deploy            # build + wrangler deploy
 pnpm check             # svelte-kit sync + svelte-check (type checking)
-pnpm lint               # eslint . (formatting + linting, no Prettier)
-pnpm lint:fix           # eslint . --fix
-pnpm test:unit          # vitest
-pnpm test:e2e           # playwright
-pnpm test               # test:unit --run + test:e2e
-pnpm db:generate         # drizzle-kit generate (new SQL migration from schema.ts changes)
-pnpm db:migrate          # apply migrations to local D1 replica (used by dev/preview)
-pnpm db:migrate:remote   # apply migrations to production D1
-pnpm db:studio           # Drizzle Studio
-pnpm cf-typegen          # wrangler types -> src/worker-configuration.d.ts (run after editing wrangler.jsonc bindings)
+pnpm lint              # eslint . (formatting + linting, no Prettier)
+pnpm lint:fix          # eslint . --fix
+pnpm test:unit         # vitest
+pnpm test:e2e          # playwright
+pnpm test              # test:unit --run + test:e2e
+pnpm db:generate       # drizzle-kit generate (new SQL migration from schema.ts changes)
+pnpm db:migrate        # apply migrations to local D1 replica (used by dev/preview)
+pnpm db:migrate:remote # apply migrations to production D1
+pnpm db:studio         # Drizzle Studio
+pnpm cf-typegen        # wrangler types -> src/worker-configuration.d.ts (run after editing wrangler.jsonc bindings)
 ```
 
 Always run `pnpm lint` and `pnpm check` before considering a change done — CI
