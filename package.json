@@ -1,27 +1,33 @@
 {
   "name": "kuzio-apps",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@11.2.2",
+  "keywords": [
+    "svelte"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
     "preview": "pnpm run build && wrangler dev",
+    "deploy": "pnpm run build && wrangler deploy",
     "prepare": "husky && (svelte-kit sync || echo '')",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test": "pnpm run test:unit -- --run && pnpm run test:e2e",
     "test:unit": "vitest",
-    "test": "npm run test:unit -- --run && npm run test:e2e",
     "test:e2e": "playwright test",
-    "deploy": "pnpm run build && wrangler deploy",
-    "cf-typegen": "wrangler types && mv worker-configuration.d.ts src/",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "wrangler d1 migrations apply DB --local",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "cf-typegen": "wrangler types && mv worker-configuration.d.ts src/"
   },
   "dependencies": {
     "@sentry/sveltekit": "^10.73.0",
