@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { enhance } from '$app/forms'
+  import { hoverTheme } from '$lib/hover-theme.svelte'
   import { onDestroy, untrack } from 'svelte'
 
   interface Props {
@@ -8,6 +9,8 @@
       href: string
       color: string
       borderColor: string
+      hoverBackgroundColor: string
+      hoverTextColor: string
       image: string
       icon: boolean
       active: boolean
@@ -25,8 +28,20 @@
   const initialSite = untrack(() => site)
   let previewColor = $state(initialSite?.color ?? '')
   let previewBorderColor = $state(initialSite?.borderColor ?? '')
+  let previewHoverBackgroundColor = $state(initialSite?.hoverBackgroundColor ?? '')
+  let previewHoverTextColor = $state(initialSite?.hoverTextColor ?? '')
   let previewImage = $state(initialSite?.image ?? '')
   let previewObjectUrl: string | undefined
+
+  // Hovering the icon preview retheme the actual page the same way a real AppLink
+  // would, so the admin can check the combination before submitting.
+  function onPreviewPointerEnter() {
+    hoverTheme.set({ background: previewHoverBackgroundColor, text: previewHoverTextColor })
+  }
+
+  function onPreviewPointerLeave() {
+    hoverTheme.set(null)
+  }
 
   function onImageChange(event: Event) {
     const file = (event.currentTarget as HTMLInputElement).files?.[0]
@@ -44,6 +59,7 @@
   }
 
   onDestroy(() => {
+    hoverTheme.set(null)
     if (previewObjectUrl) {
       URL.revokeObjectURL(previewObjectUrl)
     }
@@ -82,6 +98,30 @@
     />
   </fieldset>
   <fieldset class='fieldset'>
+    <legend class='fieldset-legend'>Tailwind hover background color class</legend>
+    <input
+      class='input w-full'
+      type='text'
+      name='hoverBackgroundColor'
+      placeholder='bg-pink-950'
+      bind:value={previewHoverBackgroundColor}
+      required
+    />
+    <p class='label'>Applied to the whole page background while this app is hovered.</p>
+  </fieldset>
+  <fieldset class='fieldset'>
+    <legend class='fieldset-legend'>Tailwind hover text color class</legend>
+    <input
+      class='input w-full'
+      type='text'
+      name='hoverTextColor'
+      placeholder='text-pink-50'
+      bind:value={previewHoverTextColor}
+      required
+    />
+    <p class='label'>Applied to the whole page text while this app is hovered.</p>
+  </fieldset>
+  <fieldset class='fieldset'>
     <legend class='fieldset-legend'>Image</legend>
     {#if site?.image}
       <div class='flex items-center gap-3'>
@@ -103,10 +143,15 @@
     </p>
   </fieldset>
 
-  <div class='flex flex-col gap-2'>
-    <p class='text-sm opacity-70'>Icon preview:</p>
+  <div
+    class='flex flex-col gap-2'
+    role='presentation'
+    onpointerenter={onPreviewPointerEnter}
+    onpointerleave={onPreviewPointerLeave}
+  >
+    <p class='text-sm opacity-70'>Icon preview (hover it to preview the page-wide hover colors):</p>
     <picture
-      class='flex h-28 w-28 items-center justify-center rounded-full border-8 {previewColor} {previewBorderColor}'
+      class='flex h-28 w-28 items-center justify-center rounded-full border-8 {previewColor} {previewBorderColor} cursor-pointer'
     >
       {#if previewImage}
         <img src={previewImage} alt='' class='h-auto w-28 rounded-full object-cover' />

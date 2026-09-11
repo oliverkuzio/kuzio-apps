@@ -6,12 +6,12 @@
 </script>
 
 <svelte:head>
-  <title>Manage sites • Kuzio Apps</title>
+  <title>Manage apps • Kuzio Apps</title>
 </svelte:head>
 
 <div class='flex items-center justify-between'>
-  <h1 class='text-xl font-semibold'>Manage sites</h1>
-  <a href='/sites/new' class='btn btn-neutral btn-sm'>+ Add site</a>
+  <h1 class='text-xl font-semibold'>Manage apps</h1>
+  <a href='/sites/new' class='btn btn-neutral btn-sm'>+ Add app</a>
 </div>
 
 {#if form?.error}
@@ -19,7 +19,7 @@
 {/if}
 
 {#if data.sites.length === 0}
-  <p class='text-sm text-gray-500'>No sites yet.</p>
+  <p class='text-sm text-gray-500'>No apps yet.</p>
 {:else}
   <ul class='list'>
     {#each data.sites as site (site.id)}

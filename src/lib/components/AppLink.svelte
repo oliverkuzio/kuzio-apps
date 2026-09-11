@@ -1,4 +1,6 @@
 <script lang='ts'>
+  import { hoverTheme } from '$lib/hover-theme.svelte'
+
   interface Props {
     /** Name of the webapp */
     name: string
@@ -8,6 +10,10 @@
     color: string
     /** Border color of the webapp */
     borderColor: string
+    /** Background color applied to the whole page while this app is hovered */
+    hoverBackgroundColor: string
+    /** Text color applied to the whole page while this app is hovered */
+    hoverTextColor: string
     /** Image URL of the webapp */
     image: string
     /** Icon */
@@ -15,11 +21,33 @@
     /** Active state of the webapp */
     active: boolean
   }
-  const { name, href, color, borderColor, image, icon, active }: Props = $props()
+  const {
+    name,
+    href,
+    color,
+    borderColor,
+    hoverBackgroundColor,
+    hoverTextColor,
+    image,
+    icon,
+    active,
+  }: Props = $props()
+
+  function onPointerEnter() {
+    hoverTheme.set({ background: hoverBackgroundColor, text: hoverTextColor })
+  }
+
+  function onPointerLeave() {
+    hoverTheme.set(null)
+  }
 </script>
 
-<article class='flex flex-col items-stretch text-center text-white'>
-  <a href={active ? href : '#'} class='d-block'>
+<article
+  class='flex flex-col items-stretch text-center text-white {active ? 'cursor-pointer' : 'cursor-not-allowed'}'
+  onpointerenter={onPointerEnter}
+  onpointerleave={onPointerLeave}
+>
+  <a href={active ? href : '#'} class='block'>
     <picture
       class='block aspect-square rounded-full {color} {borderColor} mb-3 flex h-48 w-48 items-center justify-center border-8'
     >

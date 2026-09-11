@@ -6,10 +6,10 @@
 </script>
 
 <svelte:head>
-  <title>Add site • Kuzio Apps</title>
+  <title>Add app • Kuzio Apps</title>
 </svelte:head>
 
-<h1 class='text-xl font-semibold'>Add site</h1>
-<SiteForm submitLabel='Add site' error={form?.error} />
+<h1 class='text-xl font-semibold'>Add app</h1>
+<SiteForm submitLabel='Add app' error={form?.error} />
 
-<a href='/sites' class='link text-sm'>‹ Back to your sites</a>
+<a href='/sites' class='link text-sm'>‹ Back to your apps</a>

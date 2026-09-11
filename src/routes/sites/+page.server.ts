@@ -19,13 +19,13 @@ export const actions: Actions = {
     const data = await request.formData()
     const id = data.get('id')
     if (typeof id !== 'string' || !id) {
-      return fail(400, { error: 'Missing site id.' })
+      return fail(400, { error: 'Missing app id.' })
     }
 
     const [deleted] = await locals.db.delete(sites).where(eq(sites.id, id)).returning()
 
     if (!deleted) {
-      return fail(404, { error: 'Site not found.' })
+      return fail(404, { error: 'App not found.' })
     }
 
     await deleteSiteImage(platform!.env.BUCKET, deleted.image)
