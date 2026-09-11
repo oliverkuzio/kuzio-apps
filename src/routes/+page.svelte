@@ -33,8 +33,8 @@
 
   {#if data.user}
     <div class='flex items-center justify-center gap-4 pb-4'>
-      <a href='/sites/new' class='btn btn-secondary'>+ Add site</a>
-      <a href='/sites' class='btn btn-neutral'>Manage sites</a>
+      <a href='/sites/new' class='btn btn-secondary'>+ Add app</a>
+      <a href='/sites' class='btn btn-neutral'>Manage apps</a>
     </div>
   {/if}
 </div>

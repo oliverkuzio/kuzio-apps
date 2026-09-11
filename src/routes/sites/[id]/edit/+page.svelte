@@ -9,7 +9,7 @@
   <title>Edit {data.site.name} • Kuzio Apps</title>
 </svelte:head>
 
-<h1 class='text-xl font-semibold'>Edit site</h1>
+<h1 class='text-xl font-semibold'>Edit app</h1>
 <SiteForm site={data.site} submitLabel='Save changes' error={form?.error} action='?/update' />
 
 <form
@@ -21,7 +21,7 @@
       event.preventDefault()
   }}
 >
-  <button type='submit' class='link link-error text-sm'>Delete site</button>
+  <button type='submit' class='link link-error text-sm'>Delete app</button>
 </form>
 
-<a href='/sites' class='link text-sm'>‹ Back to your sites</a>
+<a href='/sites' class='link text-sm'>‹ Back to your apps</a>

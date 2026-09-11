@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
   const [site] = await locals.db.select().from(sites).where(eq(sites.id, params.id))
 
   if (!site) {
-    throw error(404, 'Site not found')
+    throw error(404, 'App not found')
   }
 
   return { site }
@@ -39,7 +39,7 @@ export const actions: Actions = {
       .returning()
 
     if (!updated) {
-      return fail(404, { error: 'Site not found.' })
+      return fail(404, { error: 'App not found.' })
     }
 
     throw redirect(303, '/sites')
@@ -49,7 +49,7 @@ export const actions: Actions = {
     const [deleted] = await locals.db.delete(sites).where(eq(sites.id, params.id)).returning()
 
     if (!deleted) {
-      return fail(404, { error: 'Site not found.' })
+      return fail(404, { error: 'App not found.' })
     }
 
     await deleteSiteImage(platform!.env.BUCKET, deleted.image)
