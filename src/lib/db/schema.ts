@@ -18,6 +18,11 @@ export const sites = sqliteTable('sites', {
   color: text('color').notNull(),
   // Falls back to an invisible border for sites created before this field existed.
   borderColor: text('border_color').notNull().default('border-transparent'),
+  // Page-wide theme applied while this site's AppLink is hovered — see Page.svelte.
+  // Defaults match Page.svelte's static classes, so existing sites look unchanged
+  // on hover until an admin customizes them.
+  hoverBackgroundColor: text('hover_background_color').notNull().default('bg-base-300'),
+  hoverTextColor: text('hover_text_color').notNull().default('text-base-content'),
   image: text('image').notNull(),
   icon: integer('icon', { mode: 'boolean' }).notNull().default(false),
   active: integer('active', { mode: 'boolean' }).notNull().default(true),

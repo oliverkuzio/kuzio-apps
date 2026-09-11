@@ -3,6 +3,8 @@ export interface SiteFormValues {
   href: string
   color: string
   borderColor: string
+  hoverBackgroundColor: string
+  hoverTextColor: string
   icon: boolean
   active: boolean
 }
@@ -29,6 +31,8 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
   const href = data.get('href')
   const color = data.get('color')
   const borderColor = data.get('borderColor')
+  const hoverBackgroundColor = data.get('hoverBackgroundColor')
+  const hoverTextColor = data.get('hoverTextColor')
   const image = data.get('image')
   const currentImage = data.get('currentImage')
 
@@ -44,6 +48,12 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
   if (typeof borderColor !== 'string' || !borderColor.trim()) {
     return { error: 'Border color is required.' }
   }
+  if (typeof hoverBackgroundColor !== 'string' || !hoverBackgroundColor.trim()) {
+    return { error: 'Hover background color is required.' }
+  }
+  if (typeof hoverTextColor !== 'string' || !hoverTextColor.trim()) {
+    return { error: 'Hover text color is required.' }
+  }
   if (!(image instanceof File)) {
     return { error: 'An image file is required.' }
   }
@@ -54,6 +64,8 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
       href,
       color: color.trim(),
       borderColor: borderColor.trim(),
+      hoverBackgroundColor: hoverBackgroundColor.trim(),
+      hoverTextColor: hoverTextColor.trim(),
       icon: data.get('icon') === 'on',
       active: data.get('active') === 'on',
     },

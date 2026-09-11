@@ -20,6 +20,8 @@
             href={site.href}
             color={site.color}
             borderColor={site.borderColor}
+            hoverBackgroundColor={site.hoverBackgroundColor}
+            hoverTextColor={site.hoverTextColor}
             image={site.image}
             icon={site.icon}
             active={site.active}

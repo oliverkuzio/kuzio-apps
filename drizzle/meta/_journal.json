@@ -15,6 +15,13 @@
       "when": 1788776063565,
       "tag": "0001_flowery_morlun",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789118336143,
+      "tag": "0002_spotty_wiccan",
+      "breakpoints": true
     }
   ]
 }
