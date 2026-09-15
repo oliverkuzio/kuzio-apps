@@ -32,7 +32,7 @@
           {/if}
         </div>
         <div class='flex items-center gap-3 text-sm ml-auto'>
-          <a href={`/sites/${site.id}/edit`} class='btn btn-sm'>Edit</a>
+          <a href={`/sites/${site.id}/edit`} class='btn btn-neutral btn-sm'>Edit</a>
           <form
             method='POST'
             action='?/delete'
@@ -53,5 +53,5 @@
 {/if}
 
 <div class='flex items-center justify-start gap-4 pb-4 text-sm'>
-  <a href='/' class='btn btn-sm'>‹ Back to home</a>
+  <a href='/' class='btn btn-neutral btn-sm'>‹ Back to home</a>
 </div>
