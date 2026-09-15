@@ -5,6 +5,7 @@ export interface SiteFormValues {
   borderColor: string
   hoverBackgroundColor: string
   hoverTextColor: string
+  hoverTheme: 'dark' | 'light'
   icon: boolean
   active: boolean
 }
@@ -15,8 +16,13 @@ export interface SiteFormError {
 
 export interface ParsedSiteForm {
   values: SiteFormValues
-  /** The uploaded image file, if one was chosen — see `storeSiteImage`. */
-  image: File
+  /**
+   * The uploaded image file, if one was chosen. Undefined when the file input was left
+   * untouched — browsers omit the filename for an empty file input, so it round-trips
+   * through FormData as a plain string rather than a File, not just an empty one.
+   * `storeSiteImage` falls back to `currentImage` in that case.
+   */
+  image?: File
   /** Existing image path carried in a hidden field, so edits can keep it unchanged. */
   currentImage?: string
 }
@@ -33,6 +39,7 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
   const borderColor = data.get('borderColor')
   const hoverBackgroundColor = data.get('hoverBackgroundColor')
   const hoverTextColor = data.get('hoverTextColor')
+  const hoverTheme = data.get('hoverTheme')
   const image = data.get('image')
   const currentImage = data.get('currentImage')
 
@@ -54,8 +61,8 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
   if (typeof hoverTextColor !== 'string' || !hoverTextColor.trim()) {
     return { error: 'Hover text color is required.' }
   }
-  if (!(image instanceof File)) {
-    return { error: 'An image file is required.' }
+  if (hoverTheme !== 'dark' && hoverTheme !== 'light') {
+    return { error: 'Hover theme must be dark or light.' }
   }
 
   return {
@@ -66,10 +73,11 @@ export async function parseSiteForm(request: Request): Promise<ParsedSiteForm | 
       borderColor: borderColor.trim(),
       hoverBackgroundColor: hoverBackgroundColor.trim(),
       hoverTextColor: hoverTextColor.trim(),
+      hoverTheme,
       icon: data.get('icon') === 'on',
       active: data.get('active') === 'on',
     },
-    image,
+    image: image instanceof File ? image : undefined,
     currentImage: typeof currentImage === 'string' && currentImage ? currentImage : undefined,
   }
 }

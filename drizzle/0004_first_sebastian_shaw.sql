@@ -1,0 +1,1 @@
+ALTER TABLE `sites` DROP COLUMN `hover_text_color`;

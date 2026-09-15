@@ -4,8 +4,12 @@
 // and every AppLink live in unrelated parts of the component tree, not an ancestor
 // chain a Svelte context could bridge.
 export interface HoverTheme {
+  /** Raw CSS color, overrides the base background var on the hovered page. */
   background: string
+  /** Raw CSS color, overrides --color-base-content on the hovered page. */
   text: string
+  /** daisyUI theme to switch to, so all component tokens (not just text) get contrast. */
+  theme: 'dark' | 'light'
 }
 
 let current = $state<HoverTheme | null>(null)

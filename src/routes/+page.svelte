@@ -22,6 +22,7 @@
             borderColor={site.borderColor}
             hoverBackgroundColor={site.hoverBackgroundColor}
             hoverTextColor={site.hoverTextColor}
+            hoverTheme={site.hoverTheme}
             image={site.image}
             icon={site.icon}
             active={site.active}
@@ -33,8 +34,8 @@
 
   {#if data.user}
     <div class='flex items-center justify-center gap-4 pb-4'>
-      <a href='/sites/new' class='btn btn-secondary'>+ Add app</a>
-      <a href='/sites' class='btn btn-neutral'>Manage apps</a>
+      <a href='/sites/new' class='btn btn-primary'>Add app</a>
+      <a href='/sites' class='btn'>Manage apps</a>
     </div>
   {/if}
 </div>

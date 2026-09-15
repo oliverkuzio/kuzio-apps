@@ -11,6 +11,7 @@
       borderColor: string
       hoverBackgroundColor: string
       hoverTextColor: string
+      hoverTheme: 'dark' | 'light'
       image: string
       icon: boolean
       active: boolean
@@ -30,13 +31,18 @@
   let previewBorderColor = $state(initialSite?.borderColor ?? '')
   let previewHoverBackgroundColor = $state(initialSite?.hoverBackgroundColor ?? '')
   let previewHoverTextColor = $state(initialSite?.hoverTextColor ?? '')
+  let previewHoverTheme = $state<'dark' | 'light'>(initialSite?.hoverTheme ?? 'dark')
   let previewImage = $state(initialSite?.image ?? '')
   let previewObjectUrl: string | undefined
 
   // Hovering the icon preview retheme the actual page the same way a real AppLink
   // would, so the admin can check the combination before submitting.
   function onPreviewPointerEnter() {
-    hoverTheme.set({ background: previewHoverBackgroundColor, text: previewHoverTextColor })
+    hoverTheme.set({
+      background: previewHoverBackgroundColor,
+      text: previewHoverTextColor,
+      theme: previewHoverTheme,
+    })
   }
 
   function onPreviewPointerLeave() {
@@ -66,7 +72,7 @@
   })
 </script>
 
-<form method='POST' {action} enctype='multipart/form-data' use:enhance class='flex flex-col gap-3'>
+<form method='POST' {action} enctype='multipart/form-data' use:enhance class='flex flex-col max-w-4xl gap-3'>
   <fieldset class='fieldset'>
     <legend class='fieldset-legend'>Name</legend>
     <input class='input w-full' type='text' name='name' value={site?.name ?? ''} required />
@@ -76,50 +82,61 @@
     <input class='input w-full' type='url' name='href' value={site?.href ?? ''} required />
   </fieldset>
   <fieldset class='fieldset'>
-    <legend class='fieldset-legend'>Tailwind background color class</legend>
+    <legend class='fieldset-legend'>Background color</legend>
     <input
       class='input w-full'
       type='text'
       name='color'
-      placeholder='bg-pink-500'
+      placeholder='#ec4899 / rgb(236 72 153) / oklch(65% 0.24 354)'
       bind:value={previewColor}
       required
     />
   </fieldset>
   <fieldset class='fieldset'>
-    <legend class='fieldset-legend'>Tailwind border color class</legend>
+    <legend class='fieldset-legend'>Border color</legend>
     <input
       class='input w-full'
       type='text'
       name='borderColor'
-      placeholder='border-pink-700'
+      placeholder='#9d174d'
       bind:value={previewBorderColor}
       required
     />
   </fieldset>
   <fieldset class='fieldset'>
-    <legend class='fieldset-legend'>Tailwind hover background color class</legend>
+    <legend class='fieldset-legend'>Hover background color</legend>
     <input
       class='input w-full'
       type='text'
       name='hoverBackgroundColor'
-      placeholder='bg-pink-950'
+      placeholder='#500724'
       bind:value={previewHoverBackgroundColor}
       required
     />
-    <p class='label'>Applied to the whole page background while this app is hovered.</p>
+    <p class='label whitespace-normal'>Applied to the whole page background while this app is hovered.</p>
   </fieldset>
   <fieldset class='fieldset'>
-    <legend class='fieldset-legend'>Tailwind hover text color class</legend>
+    <legend class='fieldset-legend'>Hover text color</legend>
     <input
       class='input w-full'
       type='text'
       name='hoverTextColor'
-      placeholder='text-pink-50'
+      placeholder='#fdf2f8'
       bind:value={previewHoverTextColor}
       required
     />
-    <p class='label'>Applied to the whole page text while this app is hovered.</p>
+    <p class='label whitespace-normal'>Applied to the whole page text while this app is hovered.</p>
+  </fieldset>
+  <fieldset class='fieldset'>
+    <legend class='fieldset-legend'>Hover theme</legend>
+    <select class='select w-full' name='hoverTheme' bind:value={previewHoverTheme} required>
+      <option value='dark'>Dark</option>
+      <option value='light'>Light</option>
+    </select>
+    <p class='label whitespace-normal'>
+      Applied to the whole page while this app is hovered, so other components (not just the text
+      color above) keep good contrast against the hover background color.
+    </p>
   </fieldset>
   <fieldset class='fieldset'>
     <legend class='fieldset-legend'>Image</legend>
@@ -137,7 +154,7 @@
       required={!site?.image}
       onchange={onImageChange}
     />
-    <p class='label'>
+    <p class='label whitespace-normal'>
       WEBP, JPG, or PNG. 512×512 or smaller, under 1MB.
       {#if site?.image}Leave empty to keep the current image.{/if}
     </p>
@@ -151,7 +168,8 @@
   >
     <p class='text-sm opacity-70'>Icon preview (hover it to preview the page-wide hover colors):</p>
     <picture
-      class='flex h-28 w-28 items-center justify-center rounded-full border-8 {previewColor} {previewBorderColor} cursor-pointer'
+      class='flex h-28 w-28 cursor-pointer items-center justify-center rounded-full border-8'
+      style='background-color: {previewColor}; border-color: {previewBorderColor}'
     >
       {#if previewImage}
         <img src={previewImage} alt='' class='h-auto w-28 rounded-full object-cover' />
@@ -169,5 +187,5 @@
   {#if error}
     <div role='alert' class='alert alert-error text-sm'>{error}</div>
   {/if}
-  <button class='btn btn-neutral' type='submit'>{submitLabel}</button>
+  <button class='btn btn-primary w-auto' type='submit'>{submitLabel}</button>
 </form>

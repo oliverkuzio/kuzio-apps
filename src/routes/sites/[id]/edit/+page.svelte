@@ -9,7 +9,7 @@
   <title>Edit {data.site.name} • Kuzio Apps</title>
 </svelte:head>
 
-<h1 class='text-xl font-semibold'>Edit app</h1>
+<h1 class='text-xl font-bold'>Edit app</h1>
 <SiteForm site={data.site} submitLabel='Save changes' error={form?.error} action='?/update' />
 
 <form

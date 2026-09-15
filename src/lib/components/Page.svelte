@@ -5,7 +5,11 @@
 </script>
 
 <article
-  class='flex min-h-screen flex-col items-stretch transition-colors duration-300 {hoverTheme.current?.background ?? 'bg-base-300'} {hoverTheme.current?.text ?? 'text-base-content'}'
+  class='flex min-h-screen flex-col items-stretch bg-base-100 text-base-content transition-colors duration-300'
+  data-theme={hoverTheme.current?.theme}
+  style={hoverTheme.current
+    ? `--color-base-100: ${hoverTheme.current.background}; --color-base-content: ${hoverTheme.current.text}`
+    : undefined}
 >
   {@render children()}
 </article>

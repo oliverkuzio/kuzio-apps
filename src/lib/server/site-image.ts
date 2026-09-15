@@ -20,10 +20,10 @@ function pathToKey(path: string) {
  */
 export async function storeSiteImage(
   bucket: R2Bucket,
-  file: File,
+  file: File | undefined,
   currentImage?: string,
 ): Promise<string | SiteImageError> {
-  const noFileChosen = file.size === 0 && file.name === ''
+  const noFileChosen = !file || (file.size === 0 && file.name === '')
   if (noFileChosen) {
     return currentImage ?? { error: 'An image file is required.' }
   }

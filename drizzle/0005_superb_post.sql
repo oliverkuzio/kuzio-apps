@@ -1,0 +1,1 @@
+ALTER TABLE `sites` ADD `hover_text_color` text DEFAULT '#000000' NOT NULL;

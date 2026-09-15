@@ -2,7 +2,6 @@
   import type { User } from 'better-auth'
   import { goto } from '$app/navigation'
   import { authClient } from '$lib/auth-client'
-  import { hoverTheme } from '$lib/hover-theme.svelte'
 
   const { user }: { user: User | null } = $props()
 
@@ -13,9 +12,9 @@
 </script>
 
 <header
-  class='sticky top-0 right-0 left-0 z-50 flex flex-row items-center justify-between p-4 transition-colors duration-300 {hoverTheme.current?.background ?? 'bg-base-300'} {hoverTheme.current?.text ?? 'text-base-content'}'
+  class='sticky top-0 right-0 left-0 z-50 flex flex-row items-center justify-between bg-base-100 p-4 text-base-content transition-colors duration-300'
 >
-  <a href='/' class='text-decoration-none inline-flex items-center{!user ? ' mx-auto' : ''}'>
+  <a href='/' class='text-decoration-none inline-flex items-center font-bold {!user ? ' mx-auto' : ''}'>
     <svg
       fill='oklch(0.656 0.241 354.308)'
       width='32'
@@ -30,7 +29,7 @@
   </a>
   {#if user}
     <div class='flex items-center gap-3 text-sm'>
-      <span class='text-gray-300'>{user.email}</span>
+      <span class='text-base-content/60'>{user.email}</span>
       <button onclick={signOut} class='btn btn-sm btn-ghost'>Sign out</button>
     </div>
   {/if}
