@@ -14,7 +14,7 @@
 <header
   class='sticky top-0 right-0 left-0 z-50 flex flex-row items-center justify-between bg-base-100 p-4 text-base-content transition-colors duration-300'
 >
-  <a href='/' class='text-decoration-none inline-flex items-center font-bold {!user ? ' mx-auto' : ''}'>
+  <a href='/' class='text-decoration-none inline-flex items-center font-semibold {!user ? ' mx-auto' : ''}'>
     <svg
       fill='oklch(0.656 0.241 354.308)'
       width='32'

@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class='flex items-center justify-between'>
-  <h1 class='text-xl font-bold'>Manage apps</h1>
+  <h1 class='text-xl font-semibold'>Manage apps</h1>
   <a href='/sites/new' class='btn btn-primary btn-sm'>Add app</a>
 </div>
 

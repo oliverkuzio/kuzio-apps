@@ -9,7 +9,7 @@
   <title>Add app • Kuzio Apps</title>
 </svelte:head>
 
-<h1 class='text-xl font-bold'>Add app</h1>
+<h1 class='text-xl font-semibold'>Add app</h1>
 <SiteForm submitLabel='Add app' error={form?.error} />
 
 <a href='/sites' class='link text-sm'>‹ Back to your apps</a>

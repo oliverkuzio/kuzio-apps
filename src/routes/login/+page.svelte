@@ -24,7 +24,7 @@
 </svelte:head>
 
 <div class='m-auto flex w-full max-w-sm flex-col gap-4 p-8'>
-  <h1 class='text-center text-xl font-bold'>Sign in with GitHub</h1>
+  <h1 class='text-center text-xl font-semibold'>Sign in with GitHub</h1>
 
   {#if error}
     <div role='alert' class='alert alert-error text-sm'>{error}</div>

@@ -57,7 +57,7 @@
     >
       <img src={image} alt={name} class='h-auto w-48 rounded-full' />
     </picture>
-    <h2 class='text-lg font-bold'>
+    <h2 class='text-lg font-semibold'>
       {#if icon}
         <img src={`${href}/favicon.png`} alt={`${name} icon`} class='inline-block h-5 w-5' />
       {/if}
