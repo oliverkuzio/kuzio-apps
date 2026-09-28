@@ -63,5 +63,7 @@
       {/if}
       {name}
     </h2>
+    <!-- A span, not a <button>: interactive elements can't be nested inside the link -->
+    <span class='btn btn-primary btn-sm ml-auto sm:hidden {active ? '' : 'btn-disabled'}'>Open</span>
   </a>
 </article>
