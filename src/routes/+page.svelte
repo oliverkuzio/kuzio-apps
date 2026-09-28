@@ -12,7 +12,7 @@
 
 <div class='my-auto flex h-full gap-8 flex-col items-stretch justify-around'>
   <nav>
-    <ul class='flex flex-row flex-wrap items-center justify-center gap-8'>
+    <ul class='mx-auto flex w-fit flex-col items-start gap-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center'>
       {#each data.sites as site (site.id)}
         <li>
           <AppLink

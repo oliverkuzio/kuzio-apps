@@ -46,16 +46,16 @@
 </script>
 
 <article
-  class='flex flex-col items-stretch text-center {active ? 'cursor-pointer' : 'cursor-not-allowed'}'
+  class='flex flex-col items-stretch text-left sm:text-center {active ? 'cursor-pointer' : 'cursor-not-allowed'}'
   onpointerenter={onPointerEnter}
   onpointerleave={onPointerLeave}
 >
-  <a href={active ? href : '#'} class='block'>
+  <a href={active ? href : '#'} class='flex items-center gap-4 sm:block sm:gap-8'>
     <picture
-      class='aspect-square rounded-full mb-3 flex h-48 w-48 items-center justify-center border-8'
+      class='aspect-square rounded-full flex h-16 w-16 shrink-0 items-center justify-center border-4 sm:mb-3 sm:h-48 sm:w-48 sm:border-8'
       style='background-color: {color}; border-color: {borderColor}'
     >
-      <img src={image} alt={name} class='h-auto w-48 rounded-full' />
+      <img src={image} alt={name} class='h-auto w-full rounded-full sm:w-48' />
     </picture>
     <h2 class='text-lg font-semibold'>
       {#if icon}
